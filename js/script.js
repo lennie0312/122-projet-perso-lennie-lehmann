@@ -95,12 +95,46 @@ const data = [
 ];
 // Récupère la liste #list
 const ulList = document.getElementById("List");
+// Vide, réinitialise la liste
+ulList.innerHTML = "";
 
 // Parcours la liste et créer un li par animal
 data.forEach((animal => {
     ulList.innerHTML += `
-<li>
-<div>${animal.name}</div>
-<div><img src="${animal.image}" alt="${animal.name}"></div>
-</li>`;
+    <li>
+        <h2>${animal.name}</h2>
+        <div>
+            <img src="${animal.image}" 
+                 alt="${animal.name}">
+        </div>
+    </li>
+    `;
 }));
+
+/**
+ * Affiche les animaux dans la page
+ * @param {Array} animaux - Tableau d'objets animaux à afficher
+ */
+function afficherAnimaux(animaux) {
+
+  // Récupère la liste #list
+  const ulList = document.getElementById("List");
+
+// Parcours la liste et créer un li par animal
+  animaux.forEach((animal => {
+    ulList.innerHTML += `
+    <article class="card">
+        <img src="${animal.image}" alt="${animal.name}">
+         <div class="card-body">
+            <h2>${animal.name}</h2>
+            <p>${animal.sexe} ${animal.age}</p>
+            <span class="race">${animal.race}</span>
+        </div>
+    </article>
+    `;
+  }));
+
+}
+
+// Appel au chargement de la page
+afficherAnimaux(data);
