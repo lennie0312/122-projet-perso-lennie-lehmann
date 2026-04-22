@@ -94,23 +94,9 @@ const data = [
   }
 ];
 // Récupère la liste #list
-const ulList = document.getElementById("List");
+const ulList = document.getElementById("list");
 // Vide, réinitialise la liste
 ulList.innerHTML = "";
-
-// Parcours la liste et créer un li par animal
-data.forEach((animal => {
-    ulList.innerHTML += `
-    <li>
-        <h2>${animal.name}</h2>
-        <div>
-            <img src="${animal.image}" 
-                 alt="${animal.name}">
-        </div>
-    </li>
-    `;
-}));
-
 /**
  * Affiche les animaux dans la page
  * @param {Array} animaux - Tableau d'objets animaux à afficher
@@ -118,7 +104,7 @@ data.forEach((animal => {
 function afficherAnimaux(animaux) {
 
   // Récupère la liste #list
-  const ulList = document.getElementById("List");
+  const ulList = document.getElementById("list");
 
 // Parcours la liste et créer un li par animal
   animaux.forEach((animal => {
