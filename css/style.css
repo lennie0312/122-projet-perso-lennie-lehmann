@@ -6,37 +6,119 @@
   box-sizing: border-box;
 }
 
+/* --- Variables de couleurs --- */
+:root {
+  --primary: #6c5ce7;
+  --chat: #4a90d9;
+  --chien: #ff6b6b;
+  --lapin: #ffb366;
+  --oiseau: #66bb6a;
+  --bg: #f0f2f5;
+}
+
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
   padding: 2rem;
 }
 
+/* --- Grille principale --- */
 #list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
   list-style: none;
   padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* --- Style de la Carte --- */
 .card {
+  background: white;
+  border-radius: 12px;
   border: 1px solid #ddd;
-  border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  height: 100%;
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.card img {
-  width: 100%;
+.card-image {
+  position: relative;
   height: 200px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.card-body {
-  padding: 1rem;
+/* Badge sur l'image */
+.badge-espece {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: capitalize;
 }
+
+/* Corps de la carte */
+.card-body {
+  padding: 1.2rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sexe.mâle { color: #0984e3; }
+.sexe.femelle { color: #fd79a8; }
+
+.age {
+  color: #636e72;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.race {
+  display: block;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+/* Bouton */
+.btn-adopt {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-adopt:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* --- Couleurs Dynamiques (liées au JS) --- */
+.card[data-espece="chat"] { border-top: 5px solid var(--chat); }
+.card[data-espece="chien"] { border-top: 5px solid var(--chien); }
+.card[data-espece="lapin"] { border-top: 5px solid var(--lapin); }
+.card[data-espece="oiseau"] { border-top: 5px solid var(--oiseau); }
