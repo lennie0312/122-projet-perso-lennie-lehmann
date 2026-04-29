@@ -93,6 +93,24 @@ const data = [
     image: "https://images.unsplash.com/photo-1591384382880-418a30d50462?w=500"
   }
 ];
+// Bouton tri
+let btnSort  = document.getElementById("btn-sort");
+// console.log(btnSort);
+btnSort.addEventListener("click", function () {
+  // Sens du tri
+  let sortASC = false; // tri DESC par défaut
+  // Trie les animaux par âge DESC
+  let sortedTab = [...data].sort(function (a, b) {
+     return sortASC ? a.age - b.age : b.age - a.age;
+  });
+  // Inverser le tri
+  sortASC = !sortASC;
+
+  // Modifier le texte du bouton
+  btnSort.TextContent = sortASC ? "Trier par âge ↑" : "Trier par âge ↓";
+// Affiche le tableau avec le nouveau tri
+afficherAnimaux(sortedTab);
+});
 // Récupère la liste #list
 const ulList = document.getElementById("list");
 // Vide, réinitialise la liste
@@ -107,7 +125,8 @@ function afficherAnimaux(animaux) {
   const ulList = document.getElementById("list");
   // Variable temporaire pour construire la liste
   let html = "";
-
+  // Vide la liste
+  ulList.innerHTML = "";
 // Parcours la liste et créer un li par animal
   animaux.forEach((animal) => {
     // 2. On crée une icône selon le sexe
