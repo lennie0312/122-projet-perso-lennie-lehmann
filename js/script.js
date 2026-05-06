@@ -1,7 +1,7 @@
 "use strict";
 
 // Tableau de données — à générer avec Copilot / une IA
-const data = [
+let data = [
   {
     id: 1,
     name: "Kiméo",
@@ -93,16 +93,23 @@ const data = [
     image: "https://images.unsplash.com/photo-1591384382880-418a30d50462?w=500"
   }
 ];
+
 // Sélection des éléments
 const btnSort = document.getElementById("btn-sort");
 const searchInput = document.getElementById("search");
 const ulList = document.getElementById("list");
 
-// État global : tri par défaut DESC (false)
+// Éléments du formulaire
+const form = document.getElementById("form-add");
+const inputName = document.getElementById("input-name");
+const inputEspece = document.getElementById("input-category"); // Mappé sur espece
+const inputAge = document.getElementById("input-rating");    // Mappé sur age
+
+// État global du tri
 let sortAsc = false;
 
 /**
- * 1. FONCTION D'AFFICHAGE (Optimisée : une seule écriture DOM)
+ * FONCTION D'AFFICHAGE
  */
 function afficherAnimaux(animaux) {
   let html = "";
@@ -118,11 +125,14 @@ function afficherAnimaux(animaux) {
              <div class="card-body">
                 <div class="card-header">
                     <h2>${animal.name}</h2>
-                    <span class="sexe ${animal.sexe}">${sexeIcon}</span>
+                    <span class="sexe ${animal.sexe || "mâle"}">${sexeIcon}</span>
                 </div>
                 <p class="age">${animal.age} ans</p>
-                <span class="race">${animal.race}</span>
-                <button class="btn-adopt">Adopter ${animal.name}</button>
+                <span class="race">${animal.race || "Non précisée"}</span>
+                <div class="card-footer">
+                    <button class="btn-adopt">Adopter</button>
+                    <button class="btn-delete">Supprimer</button>
+                </div>
             </div>
         </article>
       </li>
@@ -132,40 +142,69 @@ function afficherAnimaux(animaux) {
 }
 
 /**
- * 4. FONCTION REFRESH (Chaînage Recherche + Tri)
+ * FONCTION REFRESH (Filtre + Tri)
  */
 function refresh() {
   const query = searchInput.value.toLowerCase();
 
-  // Étape A : Filtrer
   let result = data.filter(animal =>
       animal.name.toLowerCase().includes(query)
   );
 
-  // Étape B : Trier le résultat filtré
   result.sort((a, b) => {
     return sortAsc ? a.age - b.age : b.age - a.age;
   });
 
-  // Étape C : Afficher
   afficherAnimaux(result);
 }
 
 /**
- * 2 & 3. ÉCOUTEURS D'ÉVÉNEMENTS
+ * GESTIONNAIRES D'ÉVÉNEMENTS
  */
 
-// Recherche : à chaque frappe, on rafraîchit
+// 1. Recherche
 searchInput.addEventListener("input", refresh);
 
-// Tri : on inverse l'état, change le texte et rafraîchit
+// 2. Bouton de Tri
 btnSort.addEventListener("click", () => {
   sortAsc = !sortAsc;
   btnSort.textContent = sortAsc ? "Trier par âge ↑" : "Trier par âge ↓";
   refresh();
 });
 
-// Appel initial pour afficher les données au chargement
-refresh();
+// 3. Formulaire d'ajout
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
 
+  const newItem = {
+    id: Date.now(),
+    name: inputName.value.trim(),
+    espece: inputEspece.value,
+    age: Number(inputAge.value),
+    sexe: "mâle", // Valeur par défaut
+    race: "Inconnue",
+    image: "https://via.placeholder.com/500x350?text=Nouvel+Animal"
+  };
+
+  data.push(newItem);
+  refresh();
+  form.reset();
+});
+
+// 4. Suppression par délégation d'événements
+ulList.addEventListener("click", (event) => {
+  const btn = event.target.closest(".btn-delete");
+  if (!btn) return;
+
+  const card = btn.closest(".card");
+  const id = Number(card.dataset.id);
+
+  if (confirm("Voulez-vous vraiment supprimer cet animal ?")) {
+    data = data.filter(animal => animal.id !== id);
+    refresh();
+  }
+});
+
+// Premier affichage
+refresh();
 
