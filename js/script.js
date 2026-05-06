@@ -5,7 +5,7 @@ const data = [
   {
     id: 1,
     name: "Kiméo",
-    age: "11 ans",
+    age: "11",
     espece: "chat",
     sexe: "mâle",
     race: "chat de gouttière",
@@ -14,7 +14,7 @@ const data = [
   {
     id: 2,
     name: "Luna",
-    age: "3 ans",
+    age: "3",
     espece: "chat",
     sexe: "femelle",
     race: "angora",
@@ -23,7 +23,7 @@ const data = [
   {
     id: 3,
     name: "Rex",
-    age: "5 ans",
+    age: "5",
     espece: "chien",
     sexe: "mâle",
     race: "labrador",
@@ -32,7 +32,7 @@ const data = [
   {
     id: 4,
     name: "Bella",
-    age: "7 ans",
+    age: "7",
     espece: "chien",
     sexe: "femelle",
     race: "golden retriever",
@@ -41,7 +41,7 @@ const data = [
   {
     id: 5,
     name: "Minou",
-    age: "2 ans",
+    age: "2",
     espece: "chat",
     sexe: "mâle",
     race: "persan",
@@ -50,7 +50,7 @@ const data = [
   {
     id: 6,
     name: "Noisette",
-    age: "4 ans",
+    age: "4",
     espece: "lapin",
     sexe: "femelle",
     race: "lapin bélier",
@@ -59,7 +59,7 @@ const data = [
   {
     id: 7,
     name: "Coco",
-    age: "6 ans",
+    age: "6",
     espece: "oiseau",
     sexe: "mâle",
     race: "perroquet amazone",
@@ -68,7 +68,7 @@ const data = [
   {
     id: 8,
     name: "Patches",
-    age: "8 ans",
+    age: "8",
     espece: "chien",
     sexe: "femelle",
     race: "berger allemand",
@@ -77,7 +77,7 @@ const data = [
   {
     id: 9,
     name: "Flocon",
-    age: "1 an",
+    age: "2",
     espece: "lapin",
     sexe: "mâle",
     race: "angora",
@@ -86,80 +86,86 @@ const data = [
   {
     id: 10,
     name: "Tweety",
-    age: "9 ans",
+    age: "9",
     espece: "oiseau",
     sexe: "femelle",
     race: "canari",
     image: "https://images.unsplash.com/photo-1591384382880-418a30d50462?w=500"
   }
 ];
-// Bouton tri
-let btnSort  = document.getElementById("btn-sort");
-// console.log(btnSort);
-btnSort.addEventListener("click", function () {
-  // Sens du tri
-  let sortASC = false; // tri DESC par défaut
-  // Trie les animaux par âge DESC
-  let sortedTab = [...data].sort(function (a, b) {
-     return sortASC ? a.age - b.age : b.age - a.age;
-  });
-  // Inverser le tri
-  sortASC = !sortASC;
-
-  // Modifier le texte du bouton
-  btnSort.TextContent = sortASC ? "Trier par âge ↑" : "Trier par âge ↓";
-// Affiche le tableau avec le nouveau tri
-afficherAnimaux(sortedTab);
-});
-// Récupère la liste #list
+// Sélection des éléments
+const btnSort = document.getElementById("btn-sort");
+const searchInput = document.getElementById("search");
 const ulList = document.getElementById("list");
-// Vide, réinitialise la liste
-ulList.innerHTML = "";
+
+// État global : tri par défaut DESC (false)
+let sortAsc = false;
+
 /**
- * Affiche les animaux dans la page
- * @param {Array} animaux - Tableau d'objets animaux à afficher
+ * 1. FONCTION D'AFFICHAGE (Optimisée : une seule écriture DOM)
  */
 function afficherAnimaux(animaux) {
-
-  // Récupère la liste #list
-  const ulList = document.getElementById("list");
-  // Variable temporaire pour construire la liste
   let html = "";
-  // Vide la liste
-  ulList.innerHTML = "";
-// Parcours la liste et créer un li par animal
   animaux.forEach((animal) => {
-    // 2. On crée une icône selon le sexe
     const sexeIcon = animal.sexe === "mâle" ? "♂" : "♀";
-
-    // 3. On crée un élément <li> pour chaque animal
-    const li = document.createElement("li");
-
-    // 4. On injecte le HTML (note l'ajout de data-espece pour le CSS)
-    li.innerHTML = `
-    <article class="card" data-id="${animal.id}">
-        <div class="card-image">
-            <img src="${animal.image}" alt="${animal.name}">
-            <span class="badge-espece">${animal.espece}</span>
-        </div>
-         <div class="card-body">
-            <div class="card-header">
-                <h2>${animal.name}</h2>
-                <span class="sexe ${animal.sexe}">${sexeIcon}</span>
+    html += `
+      <li>
+        <article class="card" data-id="${animal.id}">
+            <div class="card-image">
+                <img src="${animal.image}" alt="${animal.name}">
+                <span class="badge-espece">${animal.espece}</span>
             </div>
-            <p class="age">${animal.age}</p>
-            <span class="race">${animal.race}</span>
-            <button class="btn-adopt">Adopter ${animal.name}</button>
-        </div>
-    </article>
+             <div class="card-body">
+                <div class="card-header">
+                    <h2>${animal.name}</h2>
+                    <span class="sexe ${animal.sexe}">${sexeIcon}</span>
+                </div>
+                <p class="age">${animal.age} ans</p>
+                <span class="race">${animal.race}</span>
+                <button class="btn-adopt">Adopter ${animal.name}</button>
+            </div>
+        </article>
+      </li>
     `;
   });
-
-  // ajoute la liste complète dans le DOM
   ulList.innerHTML = html;
 }
 
-// Appel au chargement de la page
-afficherAnimaux(data);
+/**
+ * 4. FONCTION REFRESH (Chaînage Recherche + Tri)
+ */
+function refresh() {
+  const query = searchInput.value.toLowerCase();
+
+  // Étape A : Filtrer
+  let result = data.filter(animal =>
+      animal.name.toLowerCase().includes(query)
+  );
+
+  // Étape B : Trier le résultat filtré
+  result.sort((a, b) => {
+    return sortAsc ? a.age - b.age : b.age - a.age;
+  });
+
+  // Étape C : Afficher
+  afficherAnimaux(result);
+}
+
+/**
+ * 2 & 3. ÉCOUTEURS D'ÉVÉNEMENTS
+ */
+
+// Recherche : à chaque frappe, on rafraîchit
+searchInput.addEventListener("input", refresh);
+
+// Tri : on inverse l'état, change le texte et rafraîchit
+btnSort.addEventListener("click", () => {
+  sortAsc = !sortAsc;
+  btnSort.textContent = sortAsc ? "Trier par âge ↑" : "Trier par âge ↓";
+  refresh();
+});
+
+// Appel initial pour afficher les données au chargement
+refresh();
 
 

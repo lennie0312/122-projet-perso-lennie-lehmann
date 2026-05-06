@@ -117,6 +117,28 @@ body {
   color: white;
 }
 
+/* Formulaire */
+form {
+  margin: 2em 0;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+input, select, button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #0078d4;
+}
+
 /* --- Couleurs Dynamiques (liées au JS) --- */
 .card[data-espece="chat"] { border-top: 5px solid var(--chat); }
 .card[data-espece="chien"] { border-top: 5px solid var(--chien); }
