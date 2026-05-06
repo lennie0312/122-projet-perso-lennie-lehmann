@@ -154,6 +154,26 @@ form button[type="submit"]:hover {
   background-color: #005fa3;
 }
 
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  #form-add {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+}
+
 /* --- Couleurs Dynamiques (liées au JS) --- */
 .card[data-espece="chat"] { border-top: 5px solid var(--chat); }
 .card[data-espece="chien"] { border-top: 5px solid var(--chien); }

@@ -99,12 +99,15 @@ const btnSort = document.getElementById("btn-sort");
 const searchInput = document.getElementById("search");
 const ulList = document.getElementById("list");
 
+
 // Éléments du formulaire
 const form = document.getElementById("form-add");
 const inputName = document.getElementById("input-name");
-const inputEspece = document.getElementById("input-category"); // Mappé sur espece
-const inputAge = document.getElementById("input-rating");    // Mappé sur age
-
+const inputEspece = document.getElementById("input-espece");
+const inputAge = document.getElementById("input-age");
+const inputSexe = document.getElementById("input-sexe");
+const inputRace = document.getElementById("input-race");
+const inputImage = document.getElementById("input-image");
 // État global du tri
 let sortAsc = false;
 
@@ -112,12 +115,23 @@ let sortAsc = false;
  * FONCTION D'AFFICHAGE
  */
 function afficherAnimaux(animaux) {
+  // Mise à jour du compteur
+  const countElement = document.getElementById("count");
+  if (countElement) countElement.textContent = animaux.length;
+
+  if (animaux.length === 0) {
+    ulList.innerHTML = `<p class="no-result">Désolé, aucun animal ne correspond à 
+                           votre recherche. 🐾</p>`;
+    return;
+  }
+
   let html = "";
   animaux.forEach((animal) => {
     const sexeIcon = animal.sexe === "mâle" ? "♂" : "♀";
+    // Correction : Ajout du data-espece pour que tes bordures CSS fonctionnent
     html += `
       <li>
-        <article class="card" data-id="${animal.id}">
+        <article class="card" data-id="${animal.id}" data-espece="${animal.espece}">
             <div class="card-image">
                 <img src="${animal.image}" alt="${animal.name}">
                 <span class="badge-espece">${animal.espece}</span>
@@ -181,9 +195,9 @@ form.addEventListener("submit", (event) => {
     name: inputName.value.trim(),
     espece: inputEspece.value,
     age: Number(inputAge.value),
-    sexe: "mâle", // Valeur par défaut
-    race: "Inconnue",
-    image: "https://via.placeholder.com/500x350?text=Nouvel+Animal"
+    sexe: inputSexe.value,
+    race: inputRace.value.trim() || "Inconnue",
+    image: inputImage.value.trim() || "https://via.placeholder.com/500x350?text=Nouvel+Animal"
   };
 
   data.push(newItem);
