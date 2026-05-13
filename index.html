@@ -7,67 +7,70 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Animaux à adopter</h1>
-  </header>
+<header>
+  <h1>Animaux à adopter</h1>
+</header>
 
-  <main>
+<main>
+  <form id="form-add">
+    <h2>Ajouter un animal</h2>
 
-    <form id="form-add">
-      <h2>Ajouter un animal</h2>
-
-      <div class="form-group">
-        <label for="input-name">Nom</label>
-        <input type="text" id="input-name" placeholder="Ex : Médor" required>
-      </div>
-
-      <div class="form-group">
-        <label for="input-age">Âge</label>
-        <input type="number" id="input-age" min="0" placeholder="Ex : 2" required>
-      </div>
-
-      <div class="form-group">
-        <label for="input-espece">Espèce</label>
-        <select id="input-espece">
-          <option value="chat">Chat</option>
-          <option value="chien">Chien</option>
-          <option value="lapin">Lapin</option>
-          <option value="oiseau">Oiseau</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="input-sexe">Sexe</label>
-        <select id="input-sexe">
-          <option value="mâle">Mâle</option>
-          <option value="femelle">Femelle</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="input-race">Race</label>
-        <input type="text" id="input-race" placeholder="Ex : Labrador">
-      </div>
-
-      <div class="form-group">
-        <label for="input-image">URL de l'image</label>
-        <input type="url" id="input-image" placeholder="https://images.unsplash.com/...">
-      </div>
-
-      <button type="submit">Ajouter l'animal</button>
-    </form>
-
-    <label for="search">Rechercher :</label>
-    <input type="text" id="search" placeholder="Rechercher un animal...">
-    <button id="btn-sort">Trier par note ↓ (DESC)</button>
-
-    <div id="stats">
-      <p><span id="count">0</span> animal(aux) trouvé(s)</p>
+    <div class="form-group">
+      <label for="input-name">Nom</label>
+      <input type="text" id="input-name" placeholder="Ex : Médor" required>
     </div>
 
-    <ul id="list"></ul>
-  </main>
+    <div class="form-group">
+      <label for="input-age">Âge</label>
+      <input type="number" id="input-age" min="0" max="30" placeholder="Ex : 2" required>
+    </div>
 
-  <script src="js/script.js"></script>
+    <div class="form-group">
+      <label for="input-espece">Espèce</label>
+      <select id="input-espece" required>
+        <option value="" disabled selected>Choisir une espèce</option>
+        <option value="chat">Chat</option>
+        <option value="chien">Chien</option>
+        <option value="lapin">Lapin</option>
+        <option value="oiseau">Oiseau</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="input-sexe">Sexe</label>
+      <select id="input-sexe" required>
+        <option value="" disabled selected>Choisir le sexe</option>
+        <option value="mâle">Mâle</option>
+        <option value="femelle">Femelle</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="input-race">Race</label>
+      <input type="text" id="input-race" placeholder="Ex : Labrador">
+    </div>
+
+    <div class="form-group">
+      <label for="input-image">URL de l'image</label>
+      <input type="url" id="input-image" placeholder="https://images.unsplash.com/..." required>
+    </div>
+
+    <button type="submit">Ajouter l'animal</button>
+  </form>
+
+  <hr>
+
+  <label for="search">Rechercher :</label>
+  <input type="text" id="search" placeholder="Rechercher un animal...">
+  <button id="btn-sort">Trier par âge ↓</button>
+
+  <div id="stats">
+    <p><span id="count">0</span> animal(aux) trouvé(s)</p>
+  </div>
+
+  <ul id="list"></ul>
+</main>
+
+<script src="js/script.js"></script>
 </body>
 </html>

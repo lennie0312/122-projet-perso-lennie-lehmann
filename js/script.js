@@ -115,20 +115,24 @@ let sortAsc = false;
  * FONCTION D'AFFICHAGE
  */
 function afficherAnimaux(animaux) {
-  // Mise à jour du compteur
+  // 1. Mise à jour du compteur
   const countElement = document.getElementById("count");
   if (countElement) countElement.textContent = animaux.length;
 
+  // 2. Gestion du cas "aucun résultat" (Guard Clause)
   if (animaux.length === 0) {
-    ulList.innerHTML = `<p class="no-result">Désolé, aucun animal ne correspond à 
-                           votre recherche. 🐾</p>`;
+    ulList.innerHTML = `<p class="no-result">Désolé, aucun animal ne correspond
+                                             à votre recherche. 🐾</p>`;
     return;
   }
 
+  // 3. Génération du HTML
   let html = "";
   animaux.forEach((animal) => {
+    // Préparation des petites variables pour le template
     const sexeIcon = animal.sexe === "mâle" ? "♂" : "♀";
-    // Correction : Ajout du data-espece pour que tes bordures CSS fonctionnent
+
+    // Construction de la carte avec les data-attributes pour le CSS
     html += `
       <li>
         <article class="card" data-id="${animal.id}" data-espece="${animal.espece}">
@@ -152,6 +156,8 @@ function afficherAnimaux(animaux) {
       </li>
     `;
   });
+
+  // 4. Injection finale dans le DOM
   ulList.innerHTML = html;
 }
 
@@ -190,11 +196,32 @@ btnSort.addEventListener("click", () => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  // On récupère les valeurs
+  const nameValue = inputName.value.trim();
+  const ageValue = Number(inputAge.value);
+
+  // --- LES VÉRIFICATIONS ---
+
+  // Vérification du nom
+  if (nameValue === "") {
+    alert("Le nom est obligatoire !");
+    inputName.focus();
+    return; // On arrête tout ici si le nom est vide
+  }
+
+  // Vérification de l'âge (entre 0 et 30 ans par exemple)
+  if (isNaN(ageValue) || ageValue < 0 || ageValue > 30) {
+    alert("Veuillez entrer un âge réaliste entre 0 et 30.");
+    inputAge.focus();
+    return; // On arrête tout ici si l'âge est incorrect
+  }
+
+  // --- CRÉATION DE L'OBJET (Si tout est OK) ---
   const newItem = {
     id: Date.now(),
-    name: inputName.value.trim(),
+    name: nameValue,
     espece: inputEspece.value,
-    age: Number(inputAge.value),
+    age: ageValue,
     sexe: inputSexe.value,
     race: inputRace.value.trim() || "Inconnue",
     image: inputImage.value.trim() || "https://via.placeholder.com/500x350?text=Nouvel+Animal"

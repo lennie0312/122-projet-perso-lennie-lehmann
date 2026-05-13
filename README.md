@@ -1,10 +1,15 @@
-# Mon projet 122
+# Animaux à adopter
 
 Projet JavaScript — Cours 122 (ESIG)
 
 ## Description
 
-[Décris ton projet ici : quel type de données tu gères et pourquoi tu as choisi cette ressource]
+Ce projet est une application de gestion pour un refuge animalier. 
+Il permet de visualiser une liste d'animaux disponibles à l'adoption 
+(chats, chiens, lapins, oiseaux), de filtrer les résultats par nom et de les trier par âge. 
+L'utilisateur peut également enrichir la base de données via un formulaire d'ajout dynamique 
+ou retirer un animal de la liste. J'ai choisi cette ressource car elle permet de manipuler des 
+types de données variés (chaînes, nombres, images) et d'appliquer des concepts de filtrage.
 
 ## Lien GitHub Pages
 
@@ -26,14 +31,19 @@ Projet JavaScript — Cours 122 (ESIG)
 ## Transparence IA
 
 ### Outils utilisés
-[Quels outils d'IA as-tu utilisés ? (Copilot, ChatGPT, Claude, etc.)]
+- GitHub Copilot (dans WebStorm) pour la génération des données et l'autocomplétion
+- Gemini : Pour comprendre les concepts de tri et de filtrage en JavaScript
 
 ### Prompts utilisés
-[Copie ici les prompts importants que tu as donnés à l'IA]
+- "Génère un tableau de 10 animaux avec id, nom, âge, espèce, sexe, race, image"
+- "Aide-moi à créer une fonction refresh() en JavaScript qui combine à la fois 
+un filtre .filter() pour la recherche et un .sort() pour l'âge."
 
 ### Ce que j'ai appris vs ce que l'IA a généré
-[Explique ce que tu as écrit toi-même et ce que l'IA a produit. Qu'as-tu appris en utilisant l'IA ?]
-
+En utilisant l'IA pour ce projet, j'ai appris à centraliser les données du tableau data
+pour que l'affichage se mette à jour automatiquement, et j'ai maîtrisé le chaînage de fonctions 
+(filter().sort()) pour traiter des informations complexes en quelques lignes de code. J'ai aussi 
+appris à déléguer les événements pour manipuler des éléments créés dynamiquement dans le DOM.
 ---
 
 <details>
@@ -63,8 +73,6 @@ https://mon-pseudo.github.io/esig-122-jeux-video/
 
 ## Captures d'écran
 
-![Aperçu desktop](img/screenshot-desktop.png)
-![Aperçu mobile](img/screenshot-mobile.png)
 
 ## Transparence IA
 

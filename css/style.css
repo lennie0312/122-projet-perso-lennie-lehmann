@@ -174,8 +174,23 @@ form button[type="submit"]:hover {
   }
 }
 
-/* --- Couleurs Dynamiques (liées au JS) --- */
-.card[data-espece="chat"] { border-top: 5px solid var(--chat); }
-.card[data-espece="chien"] { border-top: 5px solid var(--chien); }
-.card[data-espece="lapin"] { border-top: 5px solid var(--lapin); }
-.card[data-espece="oiseau"] { border-top: 5px solid var(--oiseau); }
+.no-result {
+  /* Texte discret — information secondaire, pas une erreur */
+  color: #666;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* @media : les règles à l'intérieur ne s'appliquent QUE si la largeur
+   de la fenêtre est inférieure ou égale à 600px */
+@media (max-width: 600px) {
+  .toolbar {
+    /* Sur mobile : empiler les éléments verticalement */
+    flex-direction: column;
+  }
+
+  #search {
+    /* Supprimer la limite de 400px — utiliser toute la largeur disponible */
+    max-width: 100%;
+  }
+}
